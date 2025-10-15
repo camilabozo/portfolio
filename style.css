@@ -1,0 +1,505 @@
+/* Variables de color para un manejo más sencillo */
+:root {
+    --dark-bg: #0A0A0E;
+    --text-white: #f5f5f5;
+    --text-light-grey: #b0b0b0;
+    --purple-main: #8a2be2; /* Violeta */
+    --fuchsia-main: #ff00ff; /* Fucsia */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Source Code Pro', monospace;
+    background-color: var(--dark-bg);
+    color: var(--text-light-grey);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Estilos personalizados para la barra de scroll */
+::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de scroll */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-bg); /* Fondo gris oscuro para la pista */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--fuchsia-main); /* Usamos fucsia como color base */
+    border-radius: 10px; /* Bordes redondeados */
+    
+    /* Truco para "acortar" el pulgar: una sombra del color del fondo que tapa los extremos */
+    box-shadow: inset 0 0 0 6px var(--purple-main), inset 0 0 0 12px var(--dark-bg);
+    
+    /* Transición suave para cuando la sombra aparece/desaparece */
+    transition: box-shadow 0.2s ease-out;
+}
+
+body.scrolling ::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+    /* Al hacer scroll, eliminamos la sombra, revelando el tamaño completo del pulgar */
+    box-shadow: inset 0 0 0 6px var(--fuchsia-main);
+}
+
+/* Tipografía y títulos */
+.title, .section-title {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--text-white);
+    /* text-transform: uppercase; */
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Estilos de la barra de navegación */
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 1.5rem 2rem; /* Aumentamos un poco el padding para que se vea mejor */
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+/* Clase para ocultar el header */
+.header.hidden {
+    transform: translateY(-100%);
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+    background: transparent;
+}
+
+.nav-link {
+    color: var(--text-white);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--purple-main);
+}
+
+.nav-toggle-btn {
+    display: none; /* Oculto en desktop */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 101; /* Por encima del menú */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+}
+
+.nav-icon {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-white);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle-btn.active .nav-icon:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+.nav-toggle-btn.active .nav-icon:nth-child(2) {
+    opacity: 0;
+}
+.nav-toggle-btn.active .nav-icon:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+/* Contenedor principal para el scroll-snap */
+.main-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los contenedores de sección */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+/* Secciones de la página */
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Organiza el contenido en una columna */
+    justify-content: center; /* Centra el contenido verticalmente */
+    padding: 4rem 2rem;
+    position: relative;
+    /* Animación de transición entre bloques */
+    opacity: 0;
+    scroll-snap-align: start; /* Cada sección se alinea con el inicio */
+    transform: translateY(50px);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    /* Contenedor de contenido principal */
+    max-width: 900px;
+    width: 100%;
+    text-align: left;
+}
+
+/* La sección de proyectos necesita ancho completo */
+.project-item,
+.about {
+    max-width: 100%;
+}
+
+.section.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Cursor parpadeante para la animación de escritura */
+#typing-title::after {
+    content: '|'; /* Usamos un bloque como cursor */
+    animation: blink 1s step-end infinite;
+}
+
+/* Propiedad personalizada para animar el gradiente del borde */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+
+/* Estilos para el contenido de la sección "Acerca de" */
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem; /* Aumentamos el espacio */
+}
+
+/* Contenedor para la foto de perfil con borde animado */
+.profile-photo-wrapper {
+    position: relative;
+    width: 45vw; /* Ancho relativo a la pantalla para un tamaño grande y adaptable */
+    min-width: 300px; /* Asegura un tamaño mínimo considerable */
+    flex-shrink: 0;
+    background: conic-gradient(from var(--gradient-angle), var(--dark-bg), var(--fuchsia-main) 5%, var(--purple-main) 20%, var(--dark-bg) 35%);
+    animation: border-rotation 4s linear infinite;
+    padding: 4px; /* Este es el grosor del borde */
+}
+
+/* Estilos específicos para la foto de perfil */
+.profile-photo {
+    width: 100%;
+    height: auto; /* La altura se ajusta para mantener la proporción original */
+    display: block; /* Elimina el espacio extra inferior de la imagen */
+    object-fit: cover; /* Recorta la imagen para que quepa en el espacio sin distorsionarse */
+}
+
+/* --- Estilos de la Sección de Proyectos con Tabs y Carrusel --- */
+
+.project-item {
+    /* Ajustamos el contenedor principal de la sección */
+    flex-direction: column; /* Apila el título, tabs y contenido */
+    justify-content: flex-start; /* Alinea todo arriba */
+
+    gap: 2rem; /* Espacio entre título, tabs y contenido */
+    width: 100%;
+    margin-bottom: 300px; /* Espacio extra después de la sección de proyectos */
+}
+
+/* Estilos para las Pestañas (Tabs) */
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    width: 100%;
+}
+
+.tab-btn {
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--text-light-grey);
+    font-size: 1em;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--fuchsia-main);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    color: var(--text-white);
+}
+
+.tab-btn.active::after {
+    transform: scaleX(1);
+}
+
+.tab-pane {
+    display: none; /* Oculta todos los paneles por defecto */
+    width: 100%;
+    flex-grow: 1; /* Permite que el panel ocupe el espacio restante */
+}
+
+.tab-pane.active {
+    display: flex; /* Muestra solo el panel activo */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos para el Carrusel */
+.carousel {
+    position: relative;
+    width: 100%;
+    min-height: 65vh; /* Asegura que el contenedor tenga altura para las diapositivas absolutas */
+}
+
+.carousel-slide {
+    width: 90%;
+    max-width: 1400px; /* Un poco más de ancho para el layout grande */
+    display: flex; /* Mantenemos flex para el layout interno */
+    align-items: center;
+    gap: 3rem;
+    /* Cambios para la transición suave */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-image {
+    flex: 1.5; /* La imagen ocupa más espacio que el texto */
+    max-width: 60%;
+    height: 65vh; /* Imagen mucho más alta */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.carousel-details {
+    flex: 1; /* El texto ocupa menos espacio */
+    font-family: 'Source Code Pro', monospace;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(10, 10, 14, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-btn:hover {
+    background-color: var(--fuchsia-main);
+}
+
+.carousel-btn.prev {
+    left: 0; /* Posicionamos los botones dentro de la vista */
+}
+
+.carousel-btn.next {
+    right: 0; /* Posicionamos los botones dentro de la vista */
+}
+
+.project-title {
+    color: var(--text-white);
+    font-size: 1.4em;
+    margin-bottom: 0.5rem;
+    font-family: 'Source Code Pro', monospace;
+}
+
+/* --- Fin Estilos de Proyectos --- */
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background-color: rgba(25, 25, 30, 0.6); /* Un poco más opaco para el input */
+    color: var(--text-white);
+    font-family: 'Source Code Pro', monospace;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: var(--text-light-grey);
+    opacity: 0.7;
+}
+
+.contact-form button {
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, var(--purple-main), var(--fuchsia-main));
+    color: var(--text-white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.contact-form button:hover {
+    transform: scale(1.05);
+}
+
+/* --- Media Queries para Responsividad --- */
+
+@media (max-width: 768px) {
+    /* --- Navegación Móvil --- */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(10, 10, 14, 0.95); /* Fondo oscuro semi-transparente */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        transform: translateX(100%); /* Oculto fuera de la pantalla */
+        transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .navbar.active {
+        transform: translateX(0); /* Visible en pantalla */
+    }
+
+    .nav-link {
+        font-size: 1.5rem; /* Letras más grandes para el menú móvil */
+    }
+
+    .nav-toggle-btn {
+        display: flex; /* Muestra el botón de hamburguesa */
+    }
+
+    /* --- Ajustes Generales de Layout --- */
+    .section {
+        padding: 4rem 1rem; /* Menos padding lateral */
+    }
+
+    .title, .section-title {
+        font-size: 1.8rem; /* Títulos ligeramente más pequeños */
+    }
+
+    /* --- Sección "Acerca de Mí" --- */
+    .about-content {
+        flex-direction: column; /* Apila la foto y el texto */ 
+        text-align: left;
+    }
+
+    .profile-photo-wrapper {
+        width: 100%;
+        height: auto;
+        max-width: none;
+    }
+
+    .profile-photo {
+        width: 100%; /* Ocupa todo el ancho en móvil */
+        height: auto;
+    }
+
+    /* --- Sección de Proyectos --- */
+    .project-item {
+        padding-top: 6rem; /* Menos padding superior */
+    }
+
+    .tabs-container {
+        gap: 0.5rem;
+        flex-wrap: wrap; /* Permite que las pestañas pasen a la siguiente línea si no caben */
+    }
+
+    .tab-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9em;
+    }
+
+    .carousel-slide {
+        flex-direction: column; /* Apila imagen y detalles del proyecto */
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    .carousel-image {
+        max-width: 100%;
+        height: auto; /* Altura automática para mantener la proporción */
+        max-height: 40vh; /* Limita la altura en vista móvil */
+    }
+
+    .carousel-details {
+        text-align: left;
+    }
+
+    .carousel-btn {
+        top: 30%; /* Ajusta la posición de los botones en el layout vertical */
+    }
+
+    .carousel {
+        min-height: auto; /* Quitamos la altura mínima en móvil para que se ajuste al contenido */
+        padding-bottom: 2rem; /* Espacio para que no se corte */
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes border-rotation {
+    0% {
+        --gradient-angle: 0deg;
+    }
+    100% {
+        --gradient-angle: 360deg;
+    }
+}

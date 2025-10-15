@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camila Bozo - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#inicio" class="nav-link">Inicio</a>
+            <a href="#about" class="nav-link">Sobre mí</a>
+            <a href="#proyectos" class="nav-link">Proyectos</a>
+            <a href="#contacto" class="nav-link">Contacto</a>
+        </nav>
+        <button id="nav-toggle" class="nav-toggle-btn">
+            <span class="nav-icon"></span>
+            <span class="nav-icon"></span>
+            <span class="nav-icon"></span>
+        </button>
+    </header>
+
+    <main class="main-content">
+
+        <section id="inicio" class="section hero">
+            <h1 id="typing-title" class="title"></h1>
+            <p class="subtitle">Creo en el diseño como un lenguaje que conecta lo visible con lo invisible.
+Desde la imagen, el sonido y el movimiento, busco crear experiencias que hablen, conmuevan y dejen huella.</p>
+        </section>
+
+        <section id="about" class="section about">
+            <h2 class="section-title">Sobre mí</h2>
+            <div class="about-content">
+                <div class="profile-photo-wrapper">
+                    <img src="images/placeholder-perfil2.jpg" alt="Tu foto de perfil" class="profile-photo">
+                </div>
+                <p class="section-text">
+                    Soy diseñadora y creadora visual con un enfoque transversal entre el arte, la tecnología y la comunicación.
+Mi trabajo abarca desde el diseño de experiencias e identidades visuales, hasta la fotografía, la filmación y la edición de video.
+Me interesa crear universos visuales que transmitan emociones auténticas y conceptos profundos, fusionando estética y sentido.
+<br><br>Creo que cada proyecto es una oportunidad de explorar una nueva forma de conectar con el otro.
+                </p>
+            </div>
+        </section>
+
+        <!-- Proyecto 1 -->
+        <section id="proyectos" class="section project-item">
+            <h2 class="section-title">Proyectos</h2>
+
+            <!-- Contenedor de Pestañas (Tabs) -->
+            <div class="tabs-container">
+                <button class="tab-btn active" data-tab="ux-ui">Diseño UX/UI/Web</button>
+                <button class="tab-btn" data-tab="grafico">Diseño Gráfico</button>
+                <button class="tab-btn" data-tab="film">Filmmaking & Edición</button>
+            </div>
+
+            <!-- Contenido de las Pestañas -->
+            <div id="ux-ui" class="tab-pane active">
+                <div class="carousel">
+                    <div class="carousel-slide active">
+                        <img src="images/placeholder-proyecto1.jpg" alt="Proyecto UX/UI 1" class="carousel-image">
+                        <div class="carousel-details">
+                            <h3 class="project-title">Título del Proyecto Web 1</h3>
+                            <p class="project-description">Descripción del proyecto de diseño web. Se enfocó en la investigación de usuarios y la creación de un prototipo interactivo para mejorar la experiencia de compra online.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/placeholder-proyecto2.jpg" alt="Proyecto UX/UI 2" class="carousel-image">
+                        <div class="carousel-details">
+                            <h3 class="project-title">Rediseño App Móvil</h3>
+                            <p class="project-description">Análisis y rediseño de una aplicación móvil existente para optimizar el flujo de navegación y la interfaz de usuario, resultando en un aumento del 20% en la retención de usuarios.</p>
+                        </div>
+                    </div>
+                    <!-- Añade más slides aquí -->
+                    <button class="carousel-btn prev">‹</button>
+                    <button class="carousel-btn next">›</button>
+                </div>
+            </div>
+
+            <div id="grafico" class="tab-pane">
+                <!-- Carrusel para Diseño Gráfico (contenido de ejemplo) -->
+                <p>Aquí irán los proyectos de Diseño Gráfico.</p>
+            </div>
+
+            <div id="film" class="tab-pane">
+                <!-- Carrusel para Filmmaking (contenido de ejemplo) -->
+                <p>Aquí irán los proyectos de Filmmaking y Edición de Video.</p>
+            </div>
+        </section>
+
+        <section id="contacto" class="section contact">
+            <h2 class="section-title">¿Hablamos de tu próximo proyecto?</h2>
+            <p class="contact-text">
+                Si te interesa trabajar conmigo o querés saber más sobre mi trabajo, escribime.
+Me gusta involucrarme en proyectos con propósito, donde el diseño puede transformar una idea en experiencia.
+            </p>
+            <form class="contact-form">
+                <input type="text" placeholder="Tu Nombre">
+                <input type="email" placeholder="Tu Email">
+                <textarea placeholder="Tu Mensaje"></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+            <div class="social-links">
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">Behance</a>
+                <a href="#" target="_blank">Instagram</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
