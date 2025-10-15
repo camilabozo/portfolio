@@ -188,6 +188,13 @@ body.scrolling ::-webkit-scrollbar-thumb,
     gap: 4rem; /* Aumentamos el espacio */
 }
 
+.about-text-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Empuja el texto principal arriba y el glass abajo */
+    height: 100%; /* Ocupa la altura disponible */
+}
+
 /* Contenedor para la foto de perfil con borde animado */
 .profile-photo-wrapper {
     position: relative;
@@ -205,6 +212,24 @@ body.scrolling ::-webkit-scrollbar-thumb,
     height: auto; /* La altura se ajusta para mantener la proporción original */
     display: block; /* Elimina el espacio extra inferior de la imagen */
     object-fit: cover; /* Recorta la imagen para que quepa en el espacio sin distorsionarse */
+}
+
+/* Efecto Glass para el texto de experiencia */
+.glass-container {
+    background: rgba(25, 25, 30, 0.4); /* Fondo semi-transparente */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.5rem;
+    padding-right: 0.2rem;
+    /* margin-top ya no es necesario, se posiciona con flexbox */
+}
+
+.experience-text {
+    color: var(--purple-main);
+    font-weight: 500;
+    font-size: 0.8rem;
 }
 
 /* --- Estilos de la Sección de Proyectos con Tabs y Carrusel --- */
@@ -387,6 +412,19 @@ body.scrolling ::-webkit-scrollbar-thumb,
 
 .contact-form button:hover {
     transform: scale(1.05);
+}
+
+.social-links {
+    margin-top: 3rem; /* Más distancia del formulario */
+    text-align: center; /* Centra los enlaces dentro del contenedor */
+    align-self: center; /* Centra el contenedor glass en la sección */
+    padding: 1rem 2rem; /* Ajustamos el padding para que se vea mejor */
+}
+
+.social-links a {
+    color: var(--text-light-grey); /* Color de texto gris */
+    margin: 0 1rem; /* Espacio entre los enlaces */
+    transition: color 0.3s ease;
 }
 
 /* --- Media Queries para Responsividad --- */
